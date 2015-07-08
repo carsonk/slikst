@@ -8,19 +8,20 @@ class Professor extends Model {
 
 	/**
 	 * The database table used by the model.
-	 *
 	 * @var string
 	 */
 	protected $table = 'professors';
 
 	/**
 	 * The attributes that are mass assignable.
-	 *
 	 * @var array
 	 */
 	protected $fillable = ['name', 'added_by_user_id'];
 
-
+	/**
+	 * Date fields used on the table.
+	 * @var array
+	 */
 	protected $dates = ['deleted_at'];
 
 	public function cribs()

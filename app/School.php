@@ -30,6 +30,6 @@ class School extends Model {
 
 	public function cribs()
 	{
-		return $this->hasManyThrough('App\Crib', 'App\Professor')
+		return $this->hasManyThrough('App\Crib', 'App\Professor');
 	}
 }

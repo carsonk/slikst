@@ -55,6 +55,11 @@ class CreateSlikstSetup extends Migration {
 
             $table->foreign('course_id')->references('id')->on('courses');
 		});
+
+		Schema::table('users', function(Blueprint $table)
+		{
+			$table->integer('school_id')->unsigned();
+		});
 	}
 
 	/**

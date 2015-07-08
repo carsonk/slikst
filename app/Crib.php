@@ -26,4 +26,19 @@ class Crib extends Model {
 	 * @var array
 	 */
 	protected $dates = ['deleted_at'];
+
+	public function course()
+	{
+		return $this->belongsTo('App\Course');
+	}
+
+	public function professor()
+	{
+		return $this->course()->professor();
+	}
+
+	public function school()
+	{
+		return $this->professor()->school();
+	}
 }

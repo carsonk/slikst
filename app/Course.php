@@ -27,6 +27,11 @@ class Course extends Model {
 		return $this->belongsTo('App\Professor');
 	}
 
+	public function school()
+	{
+		return $this->professor()->school();
+	}
+
 	public function cribs()
 	{
 		return $this->hasMany('App\Crib');

@@ -65,6 +65,7 @@ class CreateSlikstSetup extends Migration {
 	public function down()
 	{
         Schema::drop('cribs');
+		Schema::drop('courses');
         Schema::drop('professors');
         Schema::drop('schools');
 	}

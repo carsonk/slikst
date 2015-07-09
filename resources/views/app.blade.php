@@ -8,6 +8,8 @@
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
+	<script type="text/javascript" src="{{ asset('/js/all.js') }}" />
+
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 

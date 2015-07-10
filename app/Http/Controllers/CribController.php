@@ -8,7 +8,7 @@ class CribController extends Controller {
      */
     public function __construct()
     {
-
+        $this->middleware('auth', ['only' => ['getCreate', 'postCreate']]);
     }
 
     public function getIndex()
@@ -21,7 +21,26 @@ class CribController extends Controller {
 
     }
 
-    public function getCreate()
+    public function getCreate($course = null)
+    {
+        $user = Auth::user();
+
+        if($user->school())
+        {
+            $my_school = $user->school();
+        }
+        else
+        {
+            $schools = School::all();
+        }
+
+        return view('create_crib', [
+            'schools' => $schools,
+            'my_school' => $my_school
+        ]);
+    }
+
+    public function postCreate()
     {
 
     }

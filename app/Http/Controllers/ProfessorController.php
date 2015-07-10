@@ -15,6 +15,7 @@ class ProfessorController extends Controller {
      */
     public function __construct()
     {
+    	$this->middleware('auth', ['only' => ['getAdd', 'postAdd']]);
     }
 
     public function getIndex()
@@ -29,8 +30,6 @@ class ProfessorController extends Controller {
 
     public function getAdd()
     {
-        $schools = School::all();
-
         return view('add_professor');
     }
 

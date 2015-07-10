@@ -1,6 +1,9 @@
+// Credit to Brad Christie of Stack Overlfow
+// http://stackoverflow.com/a/14042239
+
 ;(function($){
     $.fn.extend({
-        donetyping: function(callback,timeout){
+        doneTyping: function(callback,timeout){
             timeout = timeout || 1e3; // 1 second default timeout
             var timeoutReference,
                 doneTyping = function(el){

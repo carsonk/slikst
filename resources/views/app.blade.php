@@ -4,11 +4,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="_token" content="{{ csrf_token() }}">
 	<title>slikst</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-	<script type="text/javascript" src="{{ asset('/js/all.js') }}" />
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -57,8 +56,22 @@
 
 	@yield('content')
 
-	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<!-- Global Scripts -->
+	<script src="{{ asset('/js/jquery.js') }}"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{{ asset('js/handlebars.js')}}"></script>
+	<script src="{{ asset('js/jquery.js')}}"></script>
+	<script src="{{ asset('/js/main.js') }}"></script>
+
+	<!-- Global Handlebars Templates -->
+	<script id="float-error-template" type="text/x-handlebars-template">
+		<div class="float-error">
+		    <div class="alert alert-danger alert-dismissable" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong>Oops!</strong>
+				@{{ message }}
+			</div>
+		</div>
+	</script>
 </body>
 </html>

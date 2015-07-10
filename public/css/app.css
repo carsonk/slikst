@@ -6231,5 +6231,21 @@ label,
 .checkbox label {
   font-weight: 300;
 }
+.float-error {
+  display: none;
+  width: 40%;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+.school-suggestions {
+  display: none;
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.school-suggestions > .list-group-item:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=app.css.map */

@@ -20,4 +20,7 @@ Route::controllers([
     'cribs' => 'CribController',
     'schools' => 'SchoolController',
     'users' => 'UserController',
+	'professors' => 'ProfessorController'
 ]);
+
+Route::get('cribs/create/{course?}', 'CribController@getCreate');

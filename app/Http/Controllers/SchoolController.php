@@ -20,6 +20,31 @@ class SchoolController extends Controller {
 
     }
 
+    public function postSearch(Request $request)
+    {
+        if($request->ajax())
+        {
+            $query = '%' . $request->input('query') . '%';
+            $schools = School::where('name', 'like', $query)->take(10)->get();
+
+            $schoolsReturn = [];
+            foreach($schools as $key => $school)
+            {
+                $schoolsReturn[] = [
+                    'id' => $school->id,
+                    'name' => $school->name,
+                ];
+            }
+
+            return response()->json([
+                'schools' => $schoolsReturn,
+                'query' => $query,
+            ]);
+        }
+
+        abort(404);
+    }
+
     public function getShow($id)
     {
 

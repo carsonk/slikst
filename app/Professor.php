@@ -16,7 +16,7 @@ class Professor extends Model {
 	 * The attributes that are mass assignable.
 	 * @var array
 	 */
-	protected $fillable = ['name', 'added_by_user_id'];
+	protected $fillable = ['name', 'added_by_user_id', 'school_id'];
 
 	/**
 	 * Date fields used on the table.

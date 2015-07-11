@@ -6238,12 +6238,12 @@ label,
   bottom: 10px;
   right: 10px;
 }
-.school-suggestions {
+.suggestion-list {
   display: none;
   margin-top: 5px;
   margin-bottom: 0;
 }
-.school-suggestions > .list-group-item:hover {
+.suggestion-list > .list-group-item:hover {
   background-color: #eeeeee;
   cursor: pointer;
 }

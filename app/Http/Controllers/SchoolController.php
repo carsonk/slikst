@@ -25,7 +25,7 @@ class SchoolController extends Controller {
         if($request->ajax())
         {
             $query = '%' . $request->input('query') . '%';
-            $schools = School::where('name', 'like', $query)->take(10)->get();
+            $schools = School::where('name', 'like', $query)->take(5)->get();
 
             $schoolsReturn = [];
             foreach($schools as $key => $school)

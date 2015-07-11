@@ -74,13 +74,13 @@ $(document).ready(function() {
                         suggestionsList.empty();
 
                         if(data[returnFieldName].length > 0) {
-                            suggestionsList.slideDown();
-
                             $.each(data[returnFieldName], function(key, value) {
                                 var templateContext = { id: value.id, name: value.name };
                                 var newListItem = suggestionItemTemplate(templateContext);
                                 suggestionsList.append(newListItem);
                             });
+                            
+                            suggestionsList.slideDown();
                         } else {
                             suggestionsList.slideUp(); // Hide if there are no results.
                             // TODO: Have a "no results" message appear.

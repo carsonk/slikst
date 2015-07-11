@@ -47,6 +47,7 @@ $(document).ready(function() {
         this.init = function() {
             this.watchInputFields();
             this.watchSuggestionClicks();
+            this.watchExistingInput();
         };
 
         /**
@@ -63,6 +64,8 @@ $(document).ready(function() {
                 var returnFieldName = inputElement.data('return-field');
 
                 console.debug('Fetching suggestions from ' + submitToUrl + ' for field name ' + returnFieldName + ' with query "' + inputElement.val() + '"');
+
+                suggestionsContainer.removeClass('has-success');
 
                 $.post(submitToUrl, { query: inputElement.val(), _token: _token }, function(data) {
                     console.debug('Processing returned data.');
@@ -116,8 +119,28 @@ $(document).ready(function() {
 
                 suggestionsInput.val(item.name);
                 suggestionsId.val(item.id);
-                suggestionsInput.attr("readonly", true);
+
+                suggestionsContainer.addClass('has-success');
             });
+        };
+
+        /**
+         * Sets existing input to has-success.
+         * @return {[type]} [description]
+         */
+        this.watchExistingInput = function() {
+            $('.suggestion-container').each(function(index) {
+                var currentContainer = $(this);
+
+                var suggestionsInput = currentContainer.find('.suggestion-input');
+                var suggestionsId = currentContainer.find('.suggestion-id');
+
+                if(suggestionsId.val() > 0)
+                {
+                    currentContainer.addClass('has-success');
+                }
+            });
+
         };
     }
 

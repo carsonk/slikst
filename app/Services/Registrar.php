@@ -18,6 +18,7 @@ class Registrar implements RegistrarContract {
 			'name' => 'required|max:255',
 			'email' => 'required|email|max:255|unique:users',
 			'password' => 'required|confirmed|min:6',
+			'school_id' => 'required|numeric|exists:schools,id'
 		]);
 	}
 
@@ -29,10 +30,13 @@ class Registrar implements RegistrarContract {
 	 */
 	public function create(array $data)
 	{
+		$school = School::findOrFail($data['school_id']);
+
 		return User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),
+			'school_id' => $data['school_id']
 		]);
 	}
 

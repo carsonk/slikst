@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\User;
+use App\School;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 
@@ -30,7 +31,7 @@ class Registrar implements RegistrarContract {
 	 */
 	public function create(array $data)
 	{
-		$school = School::findOrFail($data['school_id']);
+		$school = School::findOrFail($data['school_id']); // Fail if
 
 		return User::create([
 			'name' => $data['name'],

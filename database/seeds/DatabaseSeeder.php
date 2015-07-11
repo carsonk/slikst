@@ -1,5 +1,7 @@
 <?php
 
+use App\School;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +16,9 @@ class DatabaseSeeder extends Seeder {
 	{
 		Model::unguard();
 
-		// $this->call('UserTableSeeder');
+		$kettering = new School;
+		$kettering->name = "Kettering University";
+		$kettering->save();
 	}
 
 }

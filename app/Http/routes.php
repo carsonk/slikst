@@ -17,6 +17,7 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 
+	'courses' => 'CourseController',
     'cribs' => 'CribController',
     'schools' => 'SchoolController',
     'users' => 'UserController',

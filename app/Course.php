@@ -18,7 +18,7 @@ class Course extends Model {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'school_id'];
+	protected $fillable = ['name', 'school_id', 'added_by_user_id'];
 
 	protected $dates = ['deleted_at'];
 

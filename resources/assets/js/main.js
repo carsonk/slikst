@@ -4,6 +4,12 @@ var _token = $('meta[name=_token]').attr('content');
 $(document).ready(function() {
     // Error Creation
 
+    /**
+     * Creates a floating error.
+     * @param  string message     The message to show.
+     * @param  int persistTime    The amount of time the error should persist.
+     * @return void
+     */
     function float_error(message, persistTime) {
         if(typeof message === 'undefined' || persistTime < 0)
         {
@@ -20,21 +26,34 @@ $(document).ready(function() {
 
         if(typeof persistTime === 'number' && persistTime > 0)
         {
-
+            setTimeout(function() {
+                $(".float-error").hide();
+            }, (persistTime / 1000));
         }
     }
 
-    // Handles grabbing suggestions from the server.
+    /**
+     * Handles suggestions fields and grabbing.
+     */
     function SuggestionsManager()
     {
         var suggestionsInputs = $(".suggestion-input");
         var suggestionItemTemplate = Handlebars.compile('<li class="suggestion-item list-group-item" data-item-id="{{id}}">{{ name }}</li>');
 
+        /**
+         * Initiates suggestions fields.
+         * @return void
+         */
         this.init = function() {
             this.watchInputFields();
             this.watchSuggestionClicks();
         };
 
+        /**
+         * Watches for input and loads suggestions from server.
+         * @private
+         * @return void
+         */
         this.watchInputFields = function() {
             suggestionsInputs.doneTyping(function(event) {
                 var inputElement = $(this);
@@ -75,6 +94,10 @@ $(document).ready(function() {
             });
         };
 
+        /**
+         * Watches for clicks on the items.
+         * @return void
+         */
         this.watchSuggestionClicks = function() {
             $(".suggestion-list").on("click", ".suggestion-item", function() {
                 var clickedElement = $(this);
@@ -98,6 +121,7 @@ $(document).ready(function() {
         };
     }
 
+    // Creates instance of suggestions manager and initiates it.
     var suggestionsManager = new SuggestionsManager();
     suggestionsManager.init();
 

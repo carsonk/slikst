@@ -18,18 +18,18 @@ class Course extends Model {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'professor_id'];
+	protected $fillable = ['name', 'school_id'];
 
 	protected $dates = ['deleted_at'];
 
-	public function professor()
-	{
-		return $this->belongsTo('App\Professor');
-	}
-
 	public function school()
 	{
-		return $this->professor()->school();
+		return $this->belongsTo('App\School');
+	}
+
+	public function creator()
+	{
+		return $this->belongsTo('App\User', 'added_by_user_id');
 	}
 
 	public function cribs()

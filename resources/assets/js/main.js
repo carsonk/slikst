@@ -24,60 +24,81 @@ $(document).ready(function() {
         }
     }
 
-    // School selection suggestions.
+    // Handles grabbing suggestions from the server.
+    function SuggestionsManager()
+    {
+        var suggestionsInputs = $(".suggestion-input");
+        var suggestionItemTemplate = Handlebars.compile('<li class="suggestion-item list-group-item" data-item-id="{{id}}">{{ name }}</li>');
 
-    var schoolSelect = $("#school-select");
+        this.init = function() {
+            this.watchInputFields();
+            this.watchSuggestionClicks();
+        };
 
-    if(schoolSelect) {
-        var schoolSelectId = $("#school-select-id");
-        var schoolSelectSubmitTo = schoolSelect.data('submit-to');
-        var schoolSuggestions = $(".school-suggestions");
+        this.watchInputFields = function() {
+            suggestionsInputs.doneTyping(function(event) {
+                var inputElement = $(this);
+                var submitToUrl = inputElement.data('suggestion-submit-to');
+                var suggestionsContainer = inputElement.closest('.suggestion-container');
+                var suggestionsList = suggestionsContainer.find('.suggestion-list');
+                var returnFieldName = inputElement.data('return-field');
 
-        var schoolSuggestionTemplate = Handlebars.compile('<li class="school-suggestion list-group-item" data-school-id="{{id}}">{{ name }}</li>');
+                console.debug('Fetching suggestions from ' + submitToUrl + ' for field name ' + returnFieldName + ' with query "' + inputElement.val() + '"');
 
-        // Sends query to server to lookup when done typing.
-        schoolSelect.doneTyping(function(event) {
-            var element = $(this);
+                $.post(submitToUrl, { query: inputElement.val(), _token: _token }, function(data) {
+                    console.debug('Processing returned data.');
 
-            $.post(schoolSelectSubmitTo, { query: element.val(), _token: _token }, function(data) {
-                if('schools' in data) {
-                    schoolSuggestions.empty();
+                    if(returnFieldName in data) {
+                        suggestionsList.empty();
 
-                    if(data.schools.length > 0) {
-                        schoolSuggestions.slideDown();
+                        if(data[returnFieldName].length > 0) {
+                            suggestionsList.slideDown();
 
-                        $.each(data.schools, function(key, value) {
-                            var templateContext = { id: value.id, name: value.name };
-                            var newListItem = schoolSuggestionTemplate(templateContext);
-                            schoolSuggestions.append(newListItem);
-                        });
+                            $.each(data[returnFieldName], function(key, value) {
+                                var templateContext = { id: value.id, name: value.name };
+                                var newListItem = suggestionItemTemplate(templateContext);
+                                suggestionsList.append(newListItem);
+                            });
+                        } else {
+                            suggestionsList.slideUp(); // Hide if there are no results.
+                            // TODO: Have a "no results" message appear.
+                            console.debug('No suggestions provided for ' + returnFieldName);
+                        }
                     } else {
-                        schoolSuggestions.slideUp(); // Hide if there are no results.
-                        // TODO: Have a "no results" message appear.
+                        console.debug('Unable to grab suggestions data.');
+                        float_error("Unable to grab suggestions data.");
                     }
-                } else {
-                    float_error("Unable to grab schools data.");
-                }
-            }, "json")
-            .fail(function() {
-                float_error("Unable to grab schools data.");
+                }, "json")
+                .fail(function() {
+                    float_error("Unable to grab suggestions data.");
+                });
             });
-        });
+        };
 
-        // Listen for selecting the links.
-        schoolSuggestions.on("click", ".school-suggestion", function() {
-            var clickedElement = $(this);
-            var school = {
-                id: clickedElement.data('school-id'),
-                name: clickedElement.text()
-            };
+        this.watchSuggestionClicks = function() {
+            $(".suggestion-list").on("click", ".suggestion-item", function() {
+                var clickedElement = $(this);
+                var item = {
+                    id: clickedElement.data('item-id'),
+                    name: clickedElement.text()
+                };
 
-            schoolSuggestions.hide();
+                var suggestionsList = clickedElement.parent();
+                suggestionsList.hide();
 
-            schoolSelect.val(school.name);
-            schoolSelectId.val(school.id);
-            schoolSelect.attr("readonly", true);
-        });
+                var suggestionsContainer = clickedElement.closest('.suggestion-container');
+
+                var suggestionsInput = suggestionsContainer.find('.suggestion-input');
+                var suggestionsId = suggestionsContainer.find('.suggestion-id');
+
+                suggestionsInput.val(item.name);
+                suggestionsId.val(item.id);
+                suggestionsInput.attr("readonly", true);
+            });
+        };
     }
+
+    var suggestionsManager = new SuggestionsManager();
+    suggestionsManager.init();
 
 });

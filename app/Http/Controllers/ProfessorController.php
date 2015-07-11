@@ -15,7 +15,7 @@ class ProfessorController extends Controller {
      */
     public function __construct()
     {
-    	$this->middleware('auth', ['only' => ['getAdd', 'postAdd']]);
+    	$this->middleware('admin', ['only' => ['getAdd', 'postAdd']]);
     }
 
     public function getIndex()
@@ -57,5 +57,30 @@ class ProfessorController extends Controller {
     public function postUpdate($id)
     {
 
+    }
+
+    public function postSearch(Request $request, $school_id)
+    {
+        if($request->ajax())
+        {
+            $query = '%' . $request->input('query') . '%';
+            $professors = Professor::where('name', 'like', $query)->take(5)->get();
+
+            $professorsReturn = [];
+            foreach($professors as $key => $professor)
+            {
+                $professorsReturn[] = [
+                    'id' => $professor->id,
+                    'name' => $professor->name,
+                ];
+            }
+
+            return response()->json([
+                'professors' => $professorsReturn,
+                'query' => $query,
+            ]);
+        }
+
+        abort(404);
     }
 }

@@ -26,12 +26,7 @@ class Professor extends Model {
 
 	public function cribs()
 	{
-		return $this->hasManyThrough('App\Crib', 'App\Course');
-	}
-
-	public function courses()
-	{
-		return $this->hasMany('App\Course');
+		return $this->hasMany('App\Crib');
 	}
 
 	public function school()

@@ -34,19 +34,17 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group suggestion-container">
 							<label class="col-md-4 control-label">School</label>
 							<div class="col-md-6">
-								<div class="suggestion-container">
-									<div class="input-group">
-										<input type="text" class="form-control suggestion-input" data-submit-to="{{ url('/schools/search/') }}"  data-suggestion-submit-to="{{ url('/schools/search/') }}"
-										data-return-field="schools" id="school-select" name="school" />
-										<span class="input-group-addon">
-											<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-										</span>
-									</div>
-									<ul class="list-group suggestion-list school-suggestions"></ul>
+								<div class="input-group">
+									<input type="text" class="form-control suggestion-input" data-submit-to="{{ url('/schools/search/') }}"  data-suggestion-submit-to="{{ url('/schools/search/') }}"
+									data-return-field="schools" name="school" />
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+									</span>
 								</div>
+								<ul class="list-group suggestion-list school-suggestions"></ul>
 							</div>
 
 							<input type="hidden" class="suggestion-id" id="school-select-id" name="school_id" value="{{ old('school_id') }}" />
@@ -55,7 +53,7 @@
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">
-									Create School
+									Add Professor
 								</button>
 								<button type="reset" class="btn">
 									Reset

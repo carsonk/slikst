@@ -58,4 +58,26 @@ class CourseController extends Controller {
     {
 
     }
+
+    public function anySearch(Request $request, $school_id)
+    {
+        $query = '%' . $request->input('query') . '%';
+        $courses = Course::where('name', 'like', $query)
+            ->where('school_id', $school_id)
+            ->take(5)->get();
+
+        $courseReturn = [];
+        foreach($courses as $key => $course)
+        {
+            $courseReturn[] = [
+                'id' => $course->id,
+                'name' => $course->name,
+            ];
+        }
+
+        return response()->json([
+            'courses' => $courseReturn,
+            'query' => $query,
+        ]);
+    }
 }

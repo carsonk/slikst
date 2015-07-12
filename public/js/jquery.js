@@ -9,7 +9,7 @@ void 0===c?d&&"get"in d&&null!==(e=d.get(a,b))?e:(e=n.find.attr(a,b),null==e?voi
 ;(function($){
     $.fn.extend({
         doneTyping: function(callback,timeout){
-            timeout = timeout || 1e3; // 1 second default timeout
+            timeout = timeout || 650;
             var timeoutReference,
                 doneTyping = function(el){
                     if (!timeoutReference) return;

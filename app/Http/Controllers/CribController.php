@@ -25,7 +25,22 @@ class CribController extends Controller {
 
     public function getIndex()
     {
+        $user = Auth::user();
+        $mySchool = $user->school;
 
+        $cribQuery = Crib::whereHas('course', function($q)
+        {
+            $q->where('school_id', Auth::user()->school->id);
+        });
+
+        $cribQuery = $cribQuery->take(20);
+
+        $cribs = $cribQuery->get();
+
+        return view('cribs_index', [
+            'cribs' => $cribs,
+            'mySchool' => $mySchool
+        ]);
     }
 
     public function getShow($id)

@@ -34,11 +34,11 @@ class Crib extends Model {
 
 	public function professor()
 	{
-		return $this->course()->professor();
+		return $this->belongsTo('App\Professor');
 	}
 
 	public function school()
 	{
-		return $this->professor()->school();
+		return $this->course->school;
 	}
 }

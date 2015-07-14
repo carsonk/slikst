@@ -4,12 +4,15 @@
 <div class="container">
 	<div class="row">
         <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="" placeholder="Search courses..." />
+                    </div>
+                </div>
+            </div>
             <ul class="list-group">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+
             </ul>
         </div>
         <div class="col-md-8">
@@ -18,7 +21,19 @@
                     Cribs
                 </div>
                 <div class="panel-body">
-                    <div class="alert alert-info" role="alert">No results found!</div>
+                    @forelse($cribs as $key => $crib)
+                        <h4>
+                            {{ $crib->name }}
+                            <small> / {{ $crib->course->name }} / {{ $crib->professor->name }}</small>
+                        </h4>
+                        <p>{{ $crib->description }}</p>
+
+                        @if(($key + 1) < count($cribs))
+                         <hr />
+                        @endif
+                    @empty
+                        <div class="alert alert-info" role="alert">No results found!</div>
+                    @endforelse
                 </div>
             </div>
         </div>

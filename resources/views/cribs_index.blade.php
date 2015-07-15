@@ -25,6 +25,13 @@
                 <div class="panel-body">
 
                     @forelse($cribs as $key => $crib)
+
+						<p class="pull-right">
+							<a href="{{ url('cribs/download/' . $crib->id) }}" class="btn btn-success" target="_blank">
+								<span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;
+								Download
+							</a>
+						</p>
                         <h4>
                             {{ $crib->name }}
                             <small> / {{ $crib->course->name }} / {{ $crib->professor->name }}</small>

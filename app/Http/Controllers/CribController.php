@@ -13,6 +13,8 @@ use App\Course;
 use App\Professor;
 
 class CribController extends Controller {
+    protected $storageLocation;
+
     /**
      * Create a new controller instance.
      *
@@ -21,6 +23,8 @@ class CribController extends Controller {
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['getCreate', 'postCreate']]);
+
+        $this->storageLocation = storage_path() . DIRECTORY_SEPARATOR . 'app';
     }
 
     public function getIndex()
@@ -48,6 +52,15 @@ class CribController extends Controller {
         return view('create_crib');
     }
 
+    public function getDownload($id)
+    {
+        $crib = Crib::findOrFail($id);
+        $file = Storage::get($crib->filename);
+
+        return (new Response($file, 200))
+                    ->header('Content-Type', 'application/pdf');
+    }
+
     public function getCreate()
     {
         $user = Auth::user();
@@ -65,10 +78,8 @@ class CribController extends Controller {
             'description' => 'max:4000',
             'course_id' => 'required|numeric|exists:courses,id',
             'professor_id' => 'required|numeric|exists:professors,id',
-            'file' => 'required|max:15000|mimes:pdf,jpeg,png,gif'
+            'file' => 'required|max:15000|mimes:pdf'
         ]);
-
-        $storageLocation = storage_path() . '/app';
 
         $file = $request->file('file');
 
@@ -76,9 +87,9 @@ class CribController extends Controller {
         {
             $newFilename = substr(md5($file->getClientOriginalName() . rand(0,100)), 0, 7)
                 . time() . '.' . strtolower($file->getClientoriginalExtension());
-        } while (File::exists($storageLocation . '/' . $newFilename));
+        } while (File::exists($this->storageLocation . '/' . $newFilename));
 
-        $file->move($storageLocation, $newFilename);
+        $file->move($this->storageLocation, $newFilename);
 
         $professor = Professor::findOrFail($request->input('professor_id'));
         $course = Course::findOrFail($request->input('course_id'));

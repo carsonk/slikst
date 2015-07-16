@@ -7,7 +7,18 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                        <input type="text" class="form-control" name="" placeholder="Search courses..." />
+					<div class="form-group suggestion-container">
+							<div class="input-group">
+								<input type="text" class="form-control suggestion-input" data-suggestion-submit-to="{{ url('/courses/search/' . $mySchool->id) }}"
+								data-return-field="courses" name="course" />
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+								</span>
+							</div>
+
+							<ul class="list-group suggestion-list"></ul>
+							<input type="hidden" class="suggestion-id" name="course_id" value="0" />
+					</div>
                 </div>
             </div>
 

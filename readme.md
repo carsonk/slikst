@@ -1,3 +1,3 @@
 ## Slikst
 
-Community Cribs database.
+Cribs database.
